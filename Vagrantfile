@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     node.vm.network "public_network", ip: "192.168.178.40", bridge: "wlp0s20f3"
     node.vm.provision "shell", path: "scripts/consul_client.sh"
     node.vm.provision "shell", path: "scripts/vault_server.sh"
-    node.vm.provision "shell", path: "scripts/vault_server.sh", privileged: false
+    node.vm.provision "shell", path: "scripts/vault_unseal.sh", privileged: false
   end
   
 end
