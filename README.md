@@ -11,6 +11,11 @@ Example of Vault with Consul cluster as backend on Vagrant
 ```bash
 git clone git@github.com:andrewpopa/vault-consul-vagrant.git
 cd vault-consul-vagrant
+```
+
+Subnet which is used in `Vagrantfile` is `192.168.178.0` - adjust this to your subnet
+
+```bash
 vagrant up
 ```
 
@@ -28,36 +33,16 @@ vault                     running (virtualbox)
 
 consul nodes will join into cluster and vault will use it as backend.
 
-## Manual step
+## Login to Vault
 
-login to vault server to unseal it. for the demo purpose only 1 unseal key will be generated and store in txt file.
-
-`Do NOT do it for production environment`
+`Do NOT do this in production - unseal key and root token will be stored in` - `/vagrant/init.txt` 
 
 ```bash
-export VAULT_ADDR=http://127.0.0.1:8200
-vault operator init -key-shares=1 -key-threshold=1 > init.txt
-vault operator unseal $(cat init.txt | grep -i "unseal key [1]" | awk '{ print $4}')
+vagrant ssh vault
+cat /vagrant/init.txt
 ```
 
-make sure it's running correctly 
-
-```bash
-$ vault status
-Key             Value
----             -----
-Seal Type       shamir
-Initialized     true
-Sealed          false
-Total Shares    1
-Threshold       1
-Version         1.4.2
-Cluster Name    vault-cluster-fa3c4198
-Cluster ID      60fcab67-9183-7512-d5e0-4349311b636c
-HA Enabled      true
-HA Cluster      https://192.168.178.40:8201
-HA Mode         active
-```
+use root token to login to Vault
 
 ## Consul & Vault
 
