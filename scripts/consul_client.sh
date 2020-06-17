@@ -36,12 +36,12 @@ which consul &>/dev/null || {
   
   # copy consul configuration 
   mkdir --parents /etc/consul.d
-  cp /vagrant/conf/consul_server.hcl /etc/consul.d/consul.hcl
+  cp /vagrant/conf/consul_client.hcl /etc/consul.d/consul.hcl
   chown --recursive consul:consul /etc/consul.d
   chmod 640 /etc/consul.d/consul.hcl
   
   # copy service definition
-  cp /vagrant/conf/consul_client.hcl /etc/consul.d/consul.hcl
+  cp /vagrant/conf/consul_client.service /etc/systemd/system/consul.service
     
   # enable and start service
   systemctl enable consul
